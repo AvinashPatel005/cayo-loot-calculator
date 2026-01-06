@@ -439,8 +439,9 @@ function App() {
         </div>
 
         <footer className="footer footer-center p-4 bg-base-300 text-base-content rounded-box mt-12">
-          <div>
-            <p>Designed by <a href="https://github.com/AvinashPatel005" target="_blank" rel="noopener noreferrer" className="">@AvinashPatel005</a></p>
+          <div className="flex flex-col gap-1">
+            <p className="text-sm">Designed by <a href="https://github.com/AvinashPatel005" target="_blank" rel="noopener noreferrer" className="link link-hover font-bold text-primary">@AvinashPatel005</a></p>
+            <p className="text-xs opacity-70">Thanks to <a href="https://github.com/MichalD96" target="_blank" rel="noopener noreferrer" className="link link-hover font-bold text-secondary">@MichalD96</a></p>
           </div>
         </footer>
       </div>

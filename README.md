@@ -1,16 +1,42 @@
-# React + Vite
+# Cayo Perico Loot Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive, and feature-rich loot calculator for the Cayo Perico Heist in GTA Online.
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **Smart Loot Calculation**: Accurately calculates potential payouts based on available secondary loot, primary target, and bag capacity.
+-   **Dynamic Crew Cuts**:
+    -   Automatically manages crew cuts with a 15% minimum enforcement.
+    -   Leader's cut auto-adjusts as you change crew percentages.
+    -   Handles 1-4 players seamlessly.
+-   **Optimization Strategy**:
+    -   **"Leader's Strategy" Dashboard**: Real-time comparison of your potential take across Solo, Duo, Trio, and Squad scenarios.
+    -   Highlights the **Best Option** (Green) and warns of suboptimal choices (Red).
+    -   Accounts for specific rules like Solo players not being able to pick up Gold (unless glitching).
+-   **Mission Modifiers**:
+    -   **Hard Mode**: +10% Primary Target value.
+    -   **Elite Challenge**: Toggle for the bonus payout.
+    -   **Solo Gold Glitch**: Specific toggle for solo runs.
+-   **Optimal Bagging Logic**: Suggests exactly what to bag (e.g., "1.5 bags of Gold, remainder Cash") to maximize value.
+-   **Persistent Settings**: Your configuration (players, loot tables, toggles) is saved automatically to your browser's local storage.
+-   **Dark/Forest Theme**: Premium dark-mode aesthetic using the DaisyUI Forest theme.
 
-## React Compiler
+## 📊 How It Works
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.  **Select Players**: Choose between 1 to 4 players.
+2.  **Enter Loot**: Input the quantity of Gold, Cocaine, Weed, Paintings, and Cash found during scoping.
+3.  **Adjust Cuts**: Set the cuts for your crew members. The calculator ensures a fair minimum (15%) and updates the Leader's share.
+4.  **Review Strategy**: Check the "Leader's Optimization Strategy" card to see if you should add or remove players to make more money personally.
 
-## Expanding the ESLint configuration
+## 👤 Author
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Avinash Patel**
+-   GitHub: [@AvinashPatel005](https://github.com/AvinashPatel005)
+
+## � Acknowledgments
+
+-   Original logic and inspiration by **[MichalD96](https://github.com/MichalD96)**.
+
+## �📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
