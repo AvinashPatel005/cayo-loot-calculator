@@ -7,6 +7,30 @@ const formatMoney = (amount) => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
 };
 
+const formatActions = (name, presses) => {
+  const target = targetsData.targets.secondary.find(t => t.name === name);
+  if (!target) return `${presses} Click${presses !== 1 ? 's' : ''}`;
+
+  const actionsPerStack = target.pickup_units.length;
+
+  if (presses >= actionsPerStack) {
+    const stacks = Math.floor(presses / actionsPerStack);
+    const leftover = presses % actionsPerStack;
+
+    if (leftover === 0) {
+      return `${stacks} Stack${stacks > 1 ? 's' : ''}`;
+    }
+    return (
+      <span className="flex flex-col items-start leading-none gap-1">
+        <span className="font-semibold">{stacks} Stack{stacks > 1 ? 's' : ''}</span>
+        <span className="opacity-75 text-[10px]">+ {leftover} Click{leftover !== 1 ? 's' : ''}</span>
+      </span>
+    );
+  }
+
+  return `${presses} Click${presses !== 1 ? 's' : ''}`;
+};
+
 function App() {
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem('cayoSettings');
@@ -130,8 +154,9 @@ function App() {
     <div className="min-h-screen bg-base-300 p-4 md:p-8 font-sans transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         <div className="navbar bg-base-100 rounded-box shadow-lg mb-8">
-          <div className="flex-1">
-            <a className="btn btn-ghost normal-case text-2xl text-primary">Cayo Perico Loot Calculator</a>
+          <div className="flex-1 justify-center items-center gap-2">
+            <img src="/logo.png" className="w-16 h-16" />
+            <span className="text-xl font-bold text-primary">Cayo Perico Loot Calculator</span>
           </div>
         </div>
 
@@ -401,7 +426,7 @@ function App() {
                           <div className="stat-title capitalize font-bold text-base-content">{item.name}</div>
                           <div className="stat-value text-lg text-primary">{item.bags.toFixed(2)} Bags</div>
                           <div className="stat-desc mt-1 flex justify-between items-center">
-                            <span>{item.presses} Actions</span>
+                            <span>{formatActions(item.name, item.presses)}</span>
                             <span className="font-bold text-success-content badge badge-success text-xs py-2">{formatMoney(item.value)}</span>
                           </div>
                         </div>
@@ -435,6 +460,46 @@ function App() {
               </div>
             </div>
 
+          </div>
+        </div>
+
+        {/* Loot Reference Table */}
+        <div className="card bg-base-100 shadow-xl mt-8">
+          <div className="card-body">
+            <h3 className="card-title text-secondary mb-4">Secondary Loot Values</h3>
+            <div className="overflow-x-auto">
+              <table className="table table-xs md:table-sm w-full">
+                <thead>
+                  <tr className="text-base-content/70 border-b-2 border-base-200">
+                    <th className="font-bold">Target</th>
+                    <th className="font-bold text-right">Stack</th>
+                    <th className="font-bold text-right">Full Bag</th>
+                    <th className="font-bold text-right">Fill %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {targetsData.targets.secondary.map(target => {
+                    // Calculate multiplier based on selected primary target and cooldown setting
+                    const primaryTargetData = targetsData.targets.primary.find(t => t.name === settings.primaryTarget);
+                    const multiplier = settings.withinCooldown && primaryTargetData ? primaryTargetData.bonus_multiplier : 1;
+
+                    const avgValueRaw = (target.value.min + target.value.max) / 2;
+                    const avgValue = avgValueRaw * multiplier;
+                    const fillPercent = (target.full_table_units / targetsData.bag_capacity) * 100;
+                    const fullBagValue = (avgValue / target.full_table_units) * targetsData.bag_capacity;
+
+                    return (
+                      <tr key={target.name} className="hover">
+                        <td className="capitalize font-bold">{target.name}</td>
+                        <td className="text-right font-mono">{formatMoney(avgValue)}</td>
+                        <td className="text-right font-mono">{formatMoney(fullBagValue)}</td>
+                        <td className="text-right font-mono">{fillPercent.toFixed(1)}%</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
