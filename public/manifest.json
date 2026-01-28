@@ -1,0 +1,15 @@
+{
+    "short_name": "Cayo Loot",
+    "name": "Cayo Loot Calculator",
+    "icons": [
+        {
+            "src": "logo.png",
+            "type": "image/png",
+            "sizes": "192x192 512x512"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#1eb854",
+    "background_color": "#ffffff"
+}
